@@ -131,6 +131,7 @@ public class WsViewTools {
         String click_to_change = clicks[0];
         String click_to_function = clicks[1];
 
+        Log.e("rlr", "initClick: " );
         for (String tetm : clicks)
         {
             Log.e("initClick", "initClick: "+tetm );

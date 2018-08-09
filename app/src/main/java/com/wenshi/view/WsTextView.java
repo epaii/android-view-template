@@ -69,6 +69,7 @@ public class WsTextView extends TextView  implements IWsView {
     public void bindData(HashMap<String, String> data,WsVIewClickListener listener) {
         bindData(data);
 
+        Log.e("rlr","binddata");
         WsViewTools.initClick( this,listener);
 
     }
