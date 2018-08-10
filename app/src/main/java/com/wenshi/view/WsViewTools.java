@@ -12,6 +12,8 @@ import java.util.HashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import test.wenshi.com.android_view_template.R;
+
 public class WsViewTools {
     public static String praseString(final Activity context, String template, HashMap<String, String> tokens) {
 
@@ -98,8 +100,8 @@ public class WsViewTools {
     public static String[] initAttrs(IWsView v, Context context, TypedArray typedArray) {
         if (context instanceof IWsViewManager) {
 
-//            if (!typedArray.getBoolean(R.styleable.WsElement_isInList, false)) {
-            if (!typedArray.getBoolean( WsViewTools.getResource(context,"WsElement_isInList","styleable"), false)) {
+           if (!typedArray.getBoolean(R.styleable.WsElement_isInList, false)) {
+           // if (!typedArray.getBoolean( WsViewTools.getResource(context,"WsElement_isInList","styleable"), false)) {
                 ((IWsViewManager) context).addView(v);
             } else {
                 ((IWsViewManager) context).addItemView(v);
@@ -107,19 +109,19 @@ public class WsViewTools {
 
         }
 
-//        String click_to_change = typedArray.getString(R.styleable.WsElement_wsClickToChange);
-//        String click_to_function = typedArray.getString(R.styleable.WsElement_wsClickToFunction);
-//        String wsShowIf = typedArray.getString(R.styleable.WsElement_wsShowIf);
-//        String wsHideIf = typedArray.getString(R.styleable.WsElement_wsHideIf);
+        String click_to_change = typedArray.getString(R.styleable.WsElement_wsClickToChange);
+        String click_to_function = typedArray.getString(R.styleable.WsElement_wsClickToFunction);
+        String wsShowIf = typedArray.getString(R.styleable.WsElement_wsShowIf);
+        String wsHideIf = typedArray.getString(R.styleable.WsElement_wsHideIf);
 
 //        Log.e("initAttrs", "WsElement_wsClickToChange: "+ WsViewTools.getResource(context,"WsElement_wsClickToChange","styleable") );
 //        Log.e("initAttrs", "WsElement_wsClickToFunction: "+ context.getResources().getIdentifier("wsClickToFunction", "styleable", context.getPackageName()) );
 //        Log.e("initAttrs", "WsElement_wsShowIf: "+ WsViewTools.getResource(context,"WsElement_wsShowIf","styleable") );
 //        Log.e("initAttrs", "WsElement_wsHideIf: "+ WsViewTools.getResource(context,"WsElement_wsHideIf","styleable") );
-        String click_to_change = typedArray.getString( WsViewTools.getResource(context,"WsElement_wsClickToChange","styleable"));
-        String click_to_function = typedArray.getString( WsViewTools.getResource(context,"WsElement_wsClickToFunction","styleable"));
-        String wsShowIf = typedArray.getString( WsViewTools.getResource(context,"WsElement_wsShowIf","styleable"));
-        String wsHideIf = typedArray.getString(WsViewTools.getResource(context,"WsElement_wsHideIf","styleable"));
+//        String click_to_change = typedArray.getString( WsViewTools.getResource(context,"WsElement_wsClickToChange","styleable"));
+//        String click_to_function = typedArray.getString( WsViewTools.getResource(context,"WsElement_wsClickToFunction","styleable"));
+//        String wsShowIf = typedArray.getString( WsViewTools.getResource(context,"WsElement_wsShowIf","styleable"));
+//        String wsHideIf = typedArray.getString(WsViewTools.getResource(context,"WsElement_wsHideIf","styleable"));
 
         return new String[]{click_to_change, click_to_function, wsShowIf, wsHideIf};
     }
@@ -214,12 +216,12 @@ public class WsViewTools {
         if (view == null) {
             return null;
         }
-        Object object=view.getTag( WsViewTools.getResource(view.getContext(),"tag_1000","id"));
-//        if(view.getTag(R.id.tag_1000) != null   )
-        if(object != null   )
+      //  Object object=view.getTag( WsViewTools.getResource(view.getContext(),"tag_1000","id"));
+        if(view.getTag(R.id.tag_1000) != null   )
+       // if(object != null   )
         {
-//            return (ArrayList<IWsView>) view.getTag(R.id.tag_1000);
-            return (ArrayList<IWsView>) object;
+           return (ArrayList<IWsView>) view.getTag(R.id.tag_1000);
+           // return (ArrayList<IWsView>) object;
         }
         ArrayList<IWsView> list = new ArrayList<>();
         if (view instanceof ViewGroup)
@@ -229,8 +231,8 @@ public class WsViewTools {
         {
             list.add((IWsView) view);
         }
-//        view.setTag(R.id.tag_1000,list);
-        view.setTag(WsViewTools.getResource(view.getContext(),"tag_1000","id"),list);
+       view.setTag(R.id.tag_1000,list);
+      //  view.setTag(WsViewTools.getResource(view.getContext(),"tag_1000","id"),list);
 
         return  list;
 

@@ -9,6 +9,8 @@ import android.widget.TextView;
 
 import java.util.HashMap;
 
+import test.wenshi.com.android_view_template.R;
+
 
 public class WsTextView extends TextView  implements IWsView {
 
@@ -34,15 +36,15 @@ public class WsTextView extends TextView  implements IWsView {
     private void initAttrs(Context context,AttributeSet attrs){
 
 
-//       typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.WsElement);
-        typedArray = getContext().obtainStyledAttributes(attrs, WsViewTools.getWsAttrsIds(context));
+       typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.WsElement);
+      //  typedArray = getContext().obtainStyledAttributes(attrs, WsViewTools.getWsAttrsIds(context));
 
         clicks_tmp = WsViewTools.initAttrs(this, context, typedArray);
 
-//         textValue = typedArray.getString(R.styleable.WsElement_wsValue);
-        textValue = typedArray.getString(WsViewTools.getResource(context,"WsElement_wsValue","styleable"));
+       textValue = typedArray.getString(R.styleable.WsElement_wsValue);
+      //  textValue = typedArray.getString(R.styleable.WsElement_wsValue);
 
-        Log.e("lmjTag1",textValue+"");
+        Log.e("lmjTag1",textValue);
 
     }
 

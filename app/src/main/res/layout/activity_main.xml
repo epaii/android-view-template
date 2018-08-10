@@ -13,20 +13,17 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Hello World!&amp;" />
+
     <com.wenshi.view.WsTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        ws:wsValue="My name is ： {name}"
+        android:padding="20dp"
         ws:wsClickToChange="vip.register.RegisterNewVipMainActivity?id={id}&amp;age={age}"
+        ws:wsValue="My name is ： {name}" />
 
-
-        />
     <com.wenshi.view.WsTextView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        ws:wsValue="My age is ： {age}"
-
         ws:wsClickToFunction="ageclick?type=1&amp;age={age}&amp;name={name}"
-
-        />
+        ws:wsValue="My age is ： {age}" />
 </LinearLayout>

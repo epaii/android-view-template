@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
+import android.widget.Toast;
 
 import com.wenshi.view.WsViewInit;
 import com.wenshi.view.WsViewTools;
@@ -28,6 +29,7 @@ public class MainActivity extends AppCompatActivity {
             @Override
             public void onChange(Context context, String click_to_change) {
                 Log.e("rlr",click_to_change);
+                Toast.makeText(context, ""+click_to_change, Toast.LENGTH_SHORT).show();
             }
         });
 
@@ -40,5 +42,6 @@ public class MainActivity extends AppCompatActivity {
     public void ageclick(View view,HashMap<String,String> data)
     {
         Log.e("rlr",data.get("type")+":"+data.get("name"));
+        Toast.makeText(this, ""+data.get("type")+":"+data.get("name"), Toast.LENGTH_SHORT).show();
     }
 }
