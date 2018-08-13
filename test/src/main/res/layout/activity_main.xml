@@ -21,7 +21,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="20dp"
-        ws:wsClickToFunction="fun?name={name}"
+        ws:wsClickToFunction="fun?name={pro}"
         ws:wsValue="职业={pro}" />
 
     <com.wenshi.view.WsImageView

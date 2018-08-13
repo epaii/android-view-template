@@ -27,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
         WsViewInit.setWsViewLisenter(new WsViewInit.IWsViewLisenter() {
             @Override
             public void onImage(ImageView imageView, String s) {
-                Picasso.with(MainActivity.this).load(s).into(imageView);
+                if (s != null) {
+                    Picasso.with(MainActivity.this).load(s).into(imageView);
+                }
                 Log.i("xing", s);
             }
 

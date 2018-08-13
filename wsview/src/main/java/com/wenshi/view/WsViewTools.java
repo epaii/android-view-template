@@ -12,7 +12,6 @@ import org.json.JSONObject;
 
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Iterator;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -21,7 +20,7 @@ import test.wenshi.com.android_view_template.R;
 public class WsViewTools {
 
 
-    public static String praseString(final Activity context, String template, Object tokens){
+    public static String praseString(final Activity context, String template, Object tokens) {
         template = praseString(template, tokens);
         template = replace(template, "\\{_GET_(.*?)\\}", new IOnFindKey() {
             @Override
@@ -65,67 +64,60 @@ public class WsViewTools {
         return sb.toString();
     }
 
+    /**
+     * 判断是否有key
+     * @param key  属性值
+     * @param data  数据
+     * @return
+     */
+    private static boolean isContainsKey(String key, Object data) {
+        if (data instanceof HashMap) {
+            return ((HashMap) data).containsKey(key);
+        } else if (data instanceof JSONObject) {
+            Log.i("xing", "(JSONObject)isContainsKey : " + ((JSONObject) data).has(key));
+            return ((JSONObject) data).has(key);
+        }
+        return false;
+    }
+
+    /**
+     * 获取value值
+     * @param key
+     * @param data
+     * @return
+     */
+    private static String getStringFromData(String key, Object data) {
+        if (data instanceof HashMap) {
+            return (String) ((HashMap) data).get(key);
+        } else if (data instanceof JSONObject) {
+            try {
+                Log.i("xing", "(JSONObject)data : " + ((JSONObject) data).getString(key));
+                return ((JSONObject) data).getString(key);
+            } catch (JSONException e) {
+                e.printStackTrace();
+            }
+        }
+        return "null";
+    }
+
     public static String praseString(String template, final Object tokens) {
         if (tokens == null) {
             return template;
         }
-        if(tokens instanceof HashMap){
 
-            if (template.indexOf("{") == -1 && ((HashMap)tokens).containsKey(template)) {
-                return (String) ((HashMap)tokens).get(template);
-            }
-
-            template = replace(template, "\\{(.*?)\\}", new IOnFindKey() {
-                @Override
-                public String onFindkey(String key) {
-                    if (((HashMap)tokens).containsKey(key)) {
-                        return (String) ((HashMap)tokens).get(key);
-                    } else {
-                        return "";
-                    }
-                }
-            });
-
-        } else if(tokens instanceof JSONObject){
-            final Iterator keys = ((JSONObject)tokens).keys();
-            try {
-                while (keys.hasNext() && template.indexOf("{") == -1) {
-                    String key = (String) keys.next();
-                    if (key.equals(template)) {
-                        String data = (String)((JSONObject)tokens).get(template);
-                        Log.i("JSONdata", "data: " + data);
-                        return data;
-                    }
-                    Log.i("JSONdata", "遍历次数: ~~~~~~~~~");
-                }
-            } catch (JSONException e) {
-                e.printStackTrace();
-            }
-
-            template = replace(template, "\\{(.*?)\\}", new IOnFindKey() {
-                @Override
-                public String onFindkey(String mkey) {
-                    final Iterator keys = ((JSONObject)tokens).keys();
-                    String data = "";
-                    try {
-                        while (keys.hasNext()) {
-                            String key = (String) keys.next();
-                            if (key.equals(mkey)) {
-                                data = (String) ((JSONObject)tokens).get(mkey);
-                                Log.i("JSONdata", "data: " + data);
-                                return data;
-                            }
-//                        Log.i("JSONdata", "遍历次数: ~~~~~~~~~");
-                        }
-                    } catch (JSONException e) {
-                        e.printStackTrace();
-                    }
-                    return data;
-                }
-
-            });
-
+        if (template.indexOf("{") == -1 && isContainsKey(template, tokens)) {
+            return getStringFromData(template, tokens);
         }
+
+        template = replace(template, "\\{(.*?)\\}", new IOnFindKey() {
+            @Override
+            public String onFindkey(String key) {
+                if (isContainsKey(key, tokens)) {
+                    return getStringFromData(key, tokens);
+                }
+                return "";
+            }
+        });
 
         template = replace(template, "\\{_G_(.*?)\\}", new IOnFindKey() {
             @Override
@@ -159,7 +151,7 @@ public class WsViewTools {
         return new String[]{click_to_change, click_to_function, wsShowIf, wsHideIf};
     }
 
-    public static String[] initAttrsByData(Activity context,Object data, String[] attrs) {
+    public static String[] initAttrsByData(Activity context, Object data, String[] attrs) {
 
         String[] attrsout = new String[attrs.length];
         if (data == null) return attrs;
@@ -228,7 +220,7 @@ public class WsViewTools {
         return false;
     }
 
-    public static void renderView(Context context, View view,Object data) {
+    public static void renderView(Context context, View view, Object data) {
         ArrayList<IWsView> viewlistemp = WsViewTools.getWsViews(view);
         int l = viewlistemp.size();
         WsVIewClickListener listener = new WsVIewClickListener(context);
