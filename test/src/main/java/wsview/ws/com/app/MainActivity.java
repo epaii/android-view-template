@@ -33,6 +33,8 @@ public class MainActivity extends AppCompatActivity {
                 Log.i("xing", s);
             }
 
+
+
             @Override
             public void onChange(Context context, String s) {
                 Toast.makeText(context, "onChange: " + s, Toast.LENGTH_SHORT).show();
@@ -44,6 +46,7 @@ public class MainActivity extends AppCompatActivity {
         data.put("age", "19");
         data.put("link", "魅族 16 真牛X");
         data.put("pro", "学生");
+        //
         data.put("img", "http://img.zcool.cn/community/0117e2571b8b246ac72538120dd8a4.jpg@1280w_1l_2o_100sh.jpg");
 
 //        WsViewTools.renderView(this, findViewById(R.id.lin), data);

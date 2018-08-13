@@ -20,8 +20,8 @@ import test.wenshi.com.android_view_template.R;
 public class WsViewTools {
 
 
-    public static String praseString(final Activity context, String template, Object tokens) {
-        template = praseString(template, tokens);
+    public static String praseString(final Activity context, String template, Object data) {
+        template = praseString(template, data);
         template = replace(template, "\\{_GET_(.*?)\\}", new IOnFindKey() {
             @Override
             public String onFindkey(String key) {
@@ -100,20 +100,20 @@ public class WsViewTools {
         return "null";
     }
 
-    public static String praseString(String template, final Object tokens) {
-        if (tokens == null) {
+    public static String praseString(String template, final Object data) {
+        if (data == null) {
             return template;
         }
 
-        if (template.indexOf("{") == -1 && isContainsKey(template, tokens)) {
-            return getStringFromData(template, tokens);
+        if (template.indexOf("{") == -1 && isContainsKey(template, data)) {
+            return getStringFromData(template, data);
         }
 
         template = replace(template, "\\{(.*?)\\}", new IOnFindKey() {
             @Override
             public String onFindkey(String key) {
-                if (isContainsKey(key, tokens)) {
-                    return getStringFromData(key, tokens);
+                if (isContainsKey(key, data)) {
+                    return getStringFromData(key, data);
                 }
                 return "";
             }
