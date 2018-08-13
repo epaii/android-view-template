@@ -4,11 +4,8 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
+import android.util.Log;
 import android.widget.ImageView;
-
-import org.json.JSONObject;
-
-import java.util.HashMap;
 
 import test.wenshi.com.android_view_template.R;
 
@@ -42,20 +39,19 @@ public class WsImageView extends ImageView implements IWsView {
 
 
         typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.WsElement);
-//        typedArray = getContext().obtainStyledAttributes(attrs, WsViewTools.getWsAttrsIds(context));
         clicks_tmp = WsViewTools.initAttrs(this, context, typedArray);
 
         textValue = typedArray.getString(R.styleable.WsElement_wsValue);
-//        textValue = typedArray.getString( WsViewTools.getResource(getContext(),"WsElement_wsValue","styleable"));
 
     }
 
-    @Override
-    public void bindData(HashMap<String, String> data) {
 
+    @Override
+    public void bindData(Object data) {
         if (textValue != null && textValue.length() > 0) {
 
             String imgurl = WsViewTools.praseString(textValue, data);
+            Log.i("xing",imgurl);
             WsViewInit.getWsViewLisenter().onImage(this, imgurl);
 
         }
@@ -63,33 +59,16 @@ public class WsImageView extends ImageView implements IWsView {
     }
 
     @Override
-    public void bindData(JSONObject jsonObject) {
-        if (textValue != null && textValue.length() > 0) {
-
-            String imgurl = WsViewTools.praseString(textValue, jsonObject);
-            WsViewInit.getWsViewLisenter().onImage(this, imgurl);
-
-        }
-        clicks = WsViewTools.initAttrsByData((Activity) this.getContext(), jsonObject, clicks_tmp);
-    }
-
-    @Override
     public String[] getClick() {
         return  clicks==null?clicks_tmp:clicks;
     }
 
-
     @Override
-    public void bindData(HashMap<String, String> data, WsVIewClickListener listener) {
+    public void bindData(Object data, WsVIewClickListener listener) {
         bindData(data);
         WsViewTools.initClick(this, listener);
     }
 
-    @Override
-    public void bindData(JSONObject jsonObject, WsVIewClickListener listener) {
-        bindData(jsonObject);
-        WsViewTools.initClick(this, listener);
-    }
 
     @Override
     public String getClassName() {

@@ -6,10 +6,6 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
-import org.json.JSONObject;
-
-import java.util.HashMap;
-
 import test.wenshi.com.android_view_template.R;
 
 
@@ -48,15 +44,10 @@ public class WsRelativeLayout extends RelativeLayout implements IWsView {
 
     }
 
-    @Override
-    public void bindData(HashMap<String, String> data) {
 
+    @Override
+    public void bindData(Object data) {
         clicks =   WsViewTools.initAttrsByData((Activity) this.getContext(),data,clicks_tmp);
-    }
-
-    @Override
-    public void bindData(JSONObject jsonObject) {
-
     }
 
     @Override
@@ -64,17 +55,12 @@ public class WsRelativeLayout extends RelativeLayout implements IWsView {
         return  clicks==null?clicks_tmp:clicks;
     }
 
-
     @Override
-    public void bindData(HashMap<String, String> data, WsVIewClickListener listener) {
+    public void bindData(Object data, WsVIewClickListener listener) {
         bindData(data);
         WsViewTools.initClick(this,listener);
     }
 
-    @Override
-    public void bindData(JSONObject jsonObject, WsVIewClickListener listener) {
-
-    }
 
     @Override
     public String getClassName() {

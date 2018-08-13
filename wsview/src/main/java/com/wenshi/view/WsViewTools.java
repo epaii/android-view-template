@@ -21,8 +21,7 @@ import test.wenshi.com.android_view_template.R;
 public class WsViewTools {
 
 
-    public static String praseString(final Activity context, String template, HashMap<String, String> tokens) {
-
+    public static String praseString(final Activity context, String template, Object tokens){
         template = praseString(template, tokens);
         template = replace(template, "\\{_GET_(.*?)\\}", new IOnFindKey() {
             @Override
@@ -36,24 +35,7 @@ public class WsViewTools {
                 }
             }
         });
-        return template;
-    }
 
-    public static String praseString(final Activity context, String template, JSONObject jsonObject) {
-
-        template = praseString(template, jsonObject);
-        template = replace(template, "\\{_GET_(.*?)\\}", new IOnFindKey() {
-            @Override
-            public String onFindkey(String key) {
-                if (context.getIntent().hasExtra(key))
-
-                {
-                    return context.getIntent().getStringExtra(key);
-                } else {
-                    return "";
-                }
-            }
-        });
         return template;
     }
 
@@ -83,89 +65,68 @@ public class WsViewTools {
         return sb.toString();
     }
 
-    public static String praseString(String template, final HashMap<String, String> tokens) {
-
+    public static String praseString(String template, final Object tokens) {
         if (tokens == null) {
             return template;
         }
-        if (template.indexOf("{") == -1 && tokens.containsKey(template)) {
-            return tokens.get(template);
-        }
-        //匹配类似velocity规则的字符串
+        if(tokens instanceof HashMap){
 
-        //生成匹配模式的正则表达式
+            if (template.indexOf("{") == -1 && ((HashMap)tokens).containsKey(template)) {
+                return (String) ((HashMap)tokens).get(template);
+            }
 
-        template = replace(template, "\\{(.*?)\\}", new IOnFindKey() {
-            @Override
-            public String onFindkey(String key) {
-                if (tokens.containsKey(key)) {
-                    return tokens.get(key);
-                } else {
-                    return "";
+            template = replace(template, "\\{(.*?)\\}", new IOnFindKey() {
+                @Override
+                public String onFindkey(String key) {
+                    if (((HashMap)tokens).containsKey(key)) {
+                        return (String) ((HashMap)tokens).get(key);
+                    } else {
+                        return "";
+                    }
                 }
+            });
+
+        } else if(tokens instanceof JSONObject){
+            final Iterator keys = ((JSONObject)tokens).keys();
+            try {
+                while (keys.hasNext() && template.indexOf("{") == -1) {
+                    String key = (String) keys.next();
+                    if (key.equals(template)) {
+                        String data = (String)((JSONObject)tokens).get(template);
+                        Log.i("JSONdata", "data: " + data);
+                        return data;
+                    }
+                    Log.i("JSONdata", "遍历次数: ~~~~~~~~~");
+                }
+            } catch (JSONException e) {
+                e.printStackTrace();
             }
-        });
-        template = replace(template, "\\{_G_(.*?)\\}", new IOnFindKey() {
-            @Override
-            public String onFindkey(String key) {
-                //
-                return key;
-            }
-        });
-        return template;
 
-
-    }
-
-    /**
-     * Json解析
-     *
-     * @param template
-     * @param jsonObject
-     * @return
-     */
-    public static String praseString(String template, final JSONObject jsonObject) {
-        if (jsonObject == null) {
-            return template;
-        }
-
-        final Iterator keys = jsonObject.keys();
-        try {
-            while (keys.hasNext() && template.indexOf("{") == -1) {
-                String key = (String) keys.next();
-                if (key.equals(template)) {
-                    String data = (String) jsonObject.get(template);
-                    Log.i("JSONdata", "data: " + data);
+            template = replace(template, "\\{(.*?)\\}", new IOnFindKey() {
+                @Override
+                public String onFindkey(String mkey) {
+                    final Iterator keys = ((JSONObject)tokens).keys();
+                    String data = "";
+                    try {
+                        while (keys.hasNext()) {
+                            String key = (String) keys.next();
+                            if (key.equals(mkey)) {
+                                data = (String) ((JSONObject)tokens).get(mkey);
+                                Log.i("JSONdata", "data: " + data);
+                                return data;
+                            }
+//                        Log.i("JSONdata", "遍历次数: ~~~~~~~~~");
+                        }
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
                     return data;
                 }
-                Log.i("JSONdata", "遍历次数: ~~~~~~~~~");
-            }
-        } catch (JSONException e) {
-            e.printStackTrace();
+
+            });
+
         }
 
-        template = replace(template, "\\{(.*?)\\}", new IOnFindKey() {
-            @Override
-            public String onFindkey(String mkey) {
-                final Iterator keys = jsonObject.keys();
-                String data = "";
-                try {
-                    while (keys.hasNext()) {
-                        String key = (String) keys.next();
-                        if (key.equals(mkey)) {
-                            data = (String) jsonObject.get(mkey);
-                            Log.i("JSONdata", "data: " + data);
-                            return data;
-                        }
-//                        Log.i("JSONdata", "遍历次数: ~~~~~~~~~");
-                    }
-                } catch (JSONException e) {
-                    e.printStackTrace();
-                }
-                return data;
-            }
-
-        });
         template = replace(template, "\\{_G_(.*?)\\}", new IOnFindKey() {
             @Override
             public String onFindkey(String key) {
@@ -173,7 +134,9 @@ public class WsViewTools {
                 return key;
             }
         });
+
         return template;
+
     }
 
 
@@ -196,6 +159,18 @@ public class WsViewTools {
         return new String[]{click_to_change, click_to_function, wsShowIf, wsHideIf};
     }
 
+    public static String[] initAttrsByData(Activity context,Object data, String[] attrs) {
+
+        String[] attrsout = new String[attrs.length];
+        if (data == null) return attrs;
+        for (int i = 0; i < attrs.length; i++) {
+            if (attrs[i] != null && attrs[i].length() > 0) {
+                attrsout[i] = praseString(context, attrs[i], data);
+            }
+        }
+
+        return attrsout;
+    }
 
     public static void initClick(IWsView view, WsVIewClickListener listener) {
         String[] clicks = view.getClick();
@@ -228,31 +203,6 @@ public class WsViewTools {
 
     }
 
-    public static String[] initAttrsByData(Activity context, HashMap<String, String> data, String[] attrs) {
-
-        String[] attrsout = new String[attrs.length];
-        if (data == null) return attrs;
-        for (int i = 0; i < attrs.length; i++) {
-            if (attrs[i] != null && attrs[i].length() > 0) {
-                attrsout[i] = praseString(context, attrs[i], data);
-            }
-        }
-        return attrsout;
-
-    }
-
-    public static String[] initAttrsByData(Activity context, JSONObject jsonObject, String[] attrs) {
-
-        String[] attrsout = new String[attrs.length];
-        if (jsonObject == null) return attrs;
-        for (int i = 0; i < attrs.length; i++) {
-            if (attrs[i] != null && attrs[i].length() > 0) {
-                attrsout[i] = praseString(context, attrs[i], jsonObject);
-            }
-        }
-        return attrsout;
-
-    }
 
     public static Boolean praseStringToboolean(String str) {
         String[] tmp = null;
@@ -278,39 +228,14 @@ public class WsViewTools {
         return false;
     }
 
-    /**
-     * HachMap解析 绑定模板
-     *
-     * @param context
-     * @param view
-     * @param data
-     */
-    public static void renderView(Context context, View view, HashMap<String, String> data) {
+    public static void renderView(Context context, View view,Object data) {
         ArrayList<IWsView> viewlistemp = WsViewTools.getWsViews(view);
         int l = viewlistemp.size();
         WsVIewClickListener listener = new WsVIewClickListener(context);
         for (int i = 0; i < l; i++) {
             viewlistemp.get(i).bindData(data, listener);
         }
-
     }
-
-    /**
-     * Json 解析  绑定模板
-     *
-     * @param context
-     * @param view
-     * @param jsonObject
-     */
-    public static void renderView(Context context, View view, JSONObject jsonObject) {
-        ArrayList<IWsView> viewlistemp = WsViewTools.getWsViews(view);
-        int l = viewlistemp.size();
-        WsVIewClickListener listener = new WsVIewClickListener(context);
-        for (int i = 0; i < l; i++) {
-            viewlistemp.get(i).bindData(jsonObject, listener);
-        }
-    }
-
 
     public static ArrayList<IWsView> getWsViews(View view) {
         if (view == null) {
