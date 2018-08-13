@@ -4,7 +4,7 @@ import android.app.Activity;
 import android.content.Context;
 import android.content.res.TypedArray;
 import android.util.AttributeSet;
-import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 
 import org.json.JSONObject;
 
@@ -13,24 +13,24 @@ import java.util.HashMap;
 import test.wenshi.com.android_view_template.R;
 
 
-public class WsLinearLayout extends LinearLayout implements IWsView {
+public class WsRelativeLayout extends RelativeLayout implements IWsView {
 
     private IWsViewManager viewManager = null;
     private String textValue="";
     TypedArray typedArray = null;
-    private String[] clicks = null;
+    String[] clicks = null;
     private String[] clicks_tmp = null;
 
-    public WsLinearLayout(Context context) {
+    public WsRelativeLayout(Context context) {
         super(context);
     }
 
-    public WsLinearLayout(Context context, AttributeSet attrs) {
+    public WsRelativeLayout(Context context, AttributeSet attrs) {
         super(context, attrs);
         initAttrs(context,attrs);
     }
 
-    public WsLinearLayout(Context context, AttributeSet attrs, int defStyleAttr) {
+    public WsRelativeLayout(Context context, AttributeSet attrs, int defStyleAttr) {
         super(context, attrs, defStyleAttr);
         initAttrs(context,attrs);
     }
@@ -40,6 +40,7 @@ public class WsLinearLayout extends LinearLayout implements IWsView {
         typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.WsElement);
 //        typedArray = getContext().obtainStyledAttributes(attrs, WsViewTools.getWsAttrsIds(context));
         clicks_tmp = WsViewTools.initAttrs(this, context, typedArray);
+
 
 
 
@@ -62,7 +63,6 @@ public class WsLinearLayout extends LinearLayout implements IWsView {
     public String[] getClick() {
         return  clicks==null?clicks_tmp:clicks;
     }
-
 
 
     @Override

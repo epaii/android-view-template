@@ -2,6 +2,8 @@ package com.wenshi.view;
 
 
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 
@@ -12,9 +14,13 @@ public interface IWsView {
 
     void bindData(HashMap<String, String> data);
 
-    String []  getClick();
+    void bindData(JSONObject jsonObject);
+
+    String[]  getClick();
 
     void bindData(HashMap<String, String> data, WsVIewClickListener listener);
+
+    void bindData(JSONObject jsonObject, WsVIewClickListener listener);
 
     String getClassName();
 }

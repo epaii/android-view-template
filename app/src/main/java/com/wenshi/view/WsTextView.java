@@ -7,15 +7,17 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
 
+import org.json.JSONObject;
+
 import java.util.HashMap;
 
 import test.wenshi.com.android_view_template.R;
 
 
-public class WsTextView extends TextView  implements IWsView {
+public class WsTextView extends TextView implements IWsView {
 
     private IWsViewManager viewManager = null;
-    private   String textValue="";
+    private String textValue="";
     TypedArray typedArray = null;
     String[] clicks = null;
     private String[] clicks_tmp = null;
@@ -33,23 +35,21 @@ public class WsTextView extends TextView  implements IWsView {
         super(context, attrs, defStyleAttr);
         initAttrs(context,attrs);
     }
-    private void initAttrs(Context context,AttributeSet attrs){
+    private void initAttrs(Context context, AttributeSet attrs){
 
 
        typedArray = getContext().obtainStyledAttributes(attrs, R.styleable.WsElement);
-      //  typedArray = getContext().obtainStyledAttributes(attrs, WsViewTools.getWsAttrsIds(context));
 
         clicks_tmp = WsViewTools.initAttrs(this, context, typedArray);
 
-       textValue = typedArray.getString(R.styleable.WsElement_wsValue);
-      //  textValue = typedArray.getString(R.styleable.WsElement_wsValue);
+         textValue = typedArray.getString(R.styleable.WsElement_wsValue);
 
-        Log.e("lmjTag1",textValue);
+        Log.e("lmjTag1",textValue+"");
 
     }
 
     @Override
-    public void bindData(HashMap<String, String>  data) {
+    public void bindData(HashMap<String, String> data) {
 
         Log.e("textValue", "bindData: "+textValue+data.toString() );
         if(textValue!=null && textValue.length()>0)
@@ -60,6 +60,20 @@ public class WsTextView extends TextView  implements IWsView {
         clicks =   WsViewTools.initAttrsByData((Activity) this.getContext(),data,clicks_tmp);
     }
 
+    /**
+     * JSON 绑定
+     * @param jsonObject
+     */
+    @Override
+    public void bindData(JSONObject jsonObject) {
+        if(textValue!=null && textValue.length()>0)
+        {
+            this.setText(WsViewTools.praseString(textValue,jsonObject));
+
+        }
+        clicks =   WsViewTools.initAttrsByData((Activity) this.getContext(),jsonObject,clicks_tmp);
+    }
+
     @Override
     public String[] getClick() {
         return  clicks==null?clicks_tmp:clicks;
@@ -68,16 +82,24 @@ public class WsTextView extends TextView  implements IWsView {
 
 
     @Override
-    public void bindData(HashMap<String, String> data,WsVIewClickListener listener) {
+    public void bindData(HashMap<String, String> data, WsVIewClickListener listener) {
         bindData(data);
 
-        Log.e("rlr","binddata");
         WsViewTools.initClick( this,listener);
 
     }
 
+    /**
+     * JSON 绑定
+     * @param jsonObject
+     * @param listener
+     */
+    @Override
+    public void bindData(JSONObject jsonObject, WsVIewClickListener listener) {
+        bindData(jsonObject);
 
-
+        WsViewTools.initClick( this,listener);
+    }
 
     @Override
     public String getClassName() {

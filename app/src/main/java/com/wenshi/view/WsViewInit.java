@@ -14,13 +14,14 @@ public class WsViewInit {
 
         void onChange(Context context, String click_to_change);
     }
-    public static IWsViewLisenter  clickChange = null;
-    public static void setWsViewLisenter(IWsViewLisenter l)
-    {
+
+    public static IWsViewLisenter clickChange = null;
+
+    public static void setWsViewLisenter(IWsViewLisenter l) {
         clickChange = l;
     }
-    public static IWsViewLisenter getWsViewLisenter()
-    {
-        return  clickChange;
+
+    public static IWsViewLisenter getWsViewLisenter() {
+        return clickChange;
     }
 }
