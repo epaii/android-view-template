@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">android-view-template</string>
+    <declare-styleable name="WsElement">
+        <attr name="wsValue" format="string" />
+        <attr name="wsClickToChange" format="string" />
+        <attr name="wsClickToFunction" format="string" />
+        <attr name="isInList" format="boolean" />
+        <attr name="wsShowIf" format="string" />
+        <attr name="wsHideIf" format="string" />
+        <attr name="wsListViewId" format="reference" />
+    </declare-styleable>
+    <item name="tag_1000" type="id"></item>
+
+
+</resources>
+
