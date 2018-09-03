@@ -3,10 +3,10 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     xmlns:ws="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/lin"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
-    android:id="@+id/lin"
     tools:context="wsview.ws.com.app.MainActivity">
 
 
@@ -15,19 +15,27 @@
         android:layout_height="wrap_content"
         android:padding="20dp"
         ws:wsClickToChange="name"
-        ws:wsValue="name={name}" />
+        android:text="Hello word"
+        ws:wsValue="people.firstName"/>
 
-    <com.wenshi.view.WsTextView
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:padding="20dp"
-        ws:wsClickToFunction="fun?name={pro}"
-        ws:wsValue="职业={pro}" />
+    <!--<com.wenshi.view.WsTextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:padding="20dp"-->
+    <!--ws:wsClickToChange="name"-->
+    <!--ws:wsValue="name={name}" />-->
 
-    <com.wenshi.view.WsImageView
-        android:layout_width="match_parent"
-        android:layout_height="150dp"
-        ws:wsClickToChange="img"
-        ws:wsValue="{img}" />
+    <!--<com.wenshi.view.WsTextView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="wrap_content"-->
+    <!--android:padding="20dp"-->
+    <!--ws:wsClickToFunction="fun?name={pro}"-->
+    <!--ws:wsValue="职业={pro}" />-->
+
+    <!--<com.wenshi.view.WsImageView-->
+    <!--android:layout_width="match_parent"-->
+    <!--android:layout_height="150dp"-->
+    <!--ws:wsClickToChange="img"-->
+    <!--ws:wsValue="{img}" />-->
 
 </LinearLayout>
