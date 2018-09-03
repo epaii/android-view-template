@@ -1,18 +1,17 @@
 package com.wenshi.view;
 
 
-
 /**
  * Created by mrren on 2017/3/1.
  */
 public interface IWsView {
 
 
-    void bindData(Object data);
+    void bindData(IKeyValue data);
 
-    String []  getClick();
+    String[] getClick();
 
-    void bindData(Object data, WsVIewClickListener listener);
+    void bindData(IKeyValue data, WsVIewClickListener listener);
 
     String getClassName();
 }

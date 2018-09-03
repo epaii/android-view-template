@@ -5,6 +5,7 @@ import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.widget.Toast;
 
+import com.wenshi.view.WsViewMapData;
 import com.wenshi.view.WsViewTools;
 
 import org.json.JSONException;
@@ -34,7 +35,7 @@ public class MainActivity extends AppCompatActivity {
             e.printStackTrace();
         }
         //绑定数据
-        WsViewTools.renderView(this, findViewById(R.id.lin), jsonObject);
+        WsViewTools.renderView(this, findViewById(R.id.lin), WsViewMapData.from(jsonObject));
 
 
 

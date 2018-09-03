@@ -11,7 +11,7 @@ import test.wenshi.com.android_view_template.R;
 
 public class WsRelativeLayout extends RelativeLayout implements IWsView {
 
-    private IWsViewManager viewManager = null;
+
     private String textValue="";
     TypedArray typedArray = null;
     String[] clicks = null;
@@ -46,7 +46,7 @@ public class WsRelativeLayout extends RelativeLayout implements IWsView {
 
 
     @Override
-    public void bindData(Object data) {
+    public void bindData(IKeyValue data) {
         clicks =   WsViewTools.initAttrsByData((Activity) this.getContext(),data,clicks_tmp);
     }
 
@@ -56,7 +56,7 @@ public class WsRelativeLayout extends RelativeLayout implements IWsView {
     }
 
     @Override
-    public void bindData(Object data, WsVIewClickListener listener) {
+    public void bindData(IKeyValue data, WsVIewClickListener listener) {
         bindData(data);
         WsViewTools.initClick(this,listener);
     }

@@ -12,7 +12,7 @@ import test.wenshi.com.android_view_template.R;
 
 public class WsImageView extends ImageView implements IWsView {
 
-    private IWsViewManager viewManager = null;
+
     private String textValue = "";
     TypedArray typedArray = null;
     String[] clicks = null;
@@ -22,7 +22,6 @@ public class WsImageView extends ImageView implements IWsView {
         super(context);
 
     }
-
 
 
     public WsImageView(Context context, AttributeSet attrs) {
@@ -47,11 +46,11 @@ public class WsImageView extends ImageView implements IWsView {
 
 
     @Override
-    public void bindData(Object data) {
+    public void bindData(IKeyValue data) {
         if (textValue != null && textValue.length() > 0) {
 
             String imgurl = WsViewTools.praseString(textValue, data);
-            Log.i("xing",imgurl);
+            Log.i("xing", imgurl);
             WsViewInit.getWsViewLisenter().onImage(this, imgurl);
 
         }
@@ -60,11 +59,11 @@ public class WsImageView extends ImageView implements IWsView {
 
     @Override
     public String[] getClick() {
-        return  clicks==null?clicks_tmp:clicks;
+        return clicks == null ? clicks_tmp : clicks;
     }
 
     @Override
-    public void bindData(Object data, WsVIewClickListener listener) {
+    public void bindData(IKeyValue data, WsVIewClickListener listener) {
         bindData(data);
         WsViewTools.initClick(this, listener);
     }

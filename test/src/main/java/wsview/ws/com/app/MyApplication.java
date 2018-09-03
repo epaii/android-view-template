@@ -18,7 +18,7 @@ public class MyApplication extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-
+        Log.i("rlr", "start");
         WsViewInit.setWsViewLisenter(new WsViewInit.IWsViewLisenter() {
             @Override
             public void onImage(ImageView imgview, String url) {

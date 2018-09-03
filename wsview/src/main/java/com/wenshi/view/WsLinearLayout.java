@@ -11,7 +11,7 @@ import test.wenshi.com.android_view_template.R;
 
 public class WsLinearLayout extends LinearLayout implements IWsView {
 
-    private IWsViewManager viewManager = null;
+
     private String textValue="";
     TypedArray typedArray = null;
     private String[] clicks = null;
@@ -45,7 +45,7 @@ public class WsLinearLayout extends LinearLayout implements IWsView {
 
 
     @Override
-    public void bindData(Object data) {
+    public void bindData(IKeyValue data) {
         clicks =   WsViewTools.initAttrsByData((Activity) this.getContext(),data,clicks_tmp);
     }
 
@@ -55,7 +55,7 @@ public class WsLinearLayout extends LinearLayout implements IWsView {
     }
 
     @Override
-    public void bindData(Object data, WsVIewClickListener listener) {
+    public void bindData(IKeyValue data, WsVIewClickListener listener) {
         bindData(data);
         WsViewTools.initClick(this,listener);
     }
