@@ -6,7 +6,6 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.LinearLayout;
 
-import test.wenshi.com.android_view_template.R;
 
 
 public class WsLinearLayout extends LinearLayout implements IWsView {

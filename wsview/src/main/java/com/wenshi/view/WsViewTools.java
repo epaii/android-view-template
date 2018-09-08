@@ -14,7 +14,6 @@ import java.util.ArrayList;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import test.wenshi.com.android_view_template.R;
 
 public class WsViewTools {
 

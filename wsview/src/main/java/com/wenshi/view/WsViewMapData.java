@@ -3,9 +3,11 @@ package com.wenshi.view;
 
 import android.util.Log;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class WsViewMapData implements IKeyValue {
@@ -33,6 +35,24 @@ public class WsViewMapData implements IKeyValue {
 
     public void data(JSONObject data) {
         this.data = data;
+
+    }
+
+    public ArrayList<IKeyValue> getArray(String key) {
+        if (data instanceof JSONObject) {
+            return WsViewArrayData.from(doget(key, JSONArray.class));
+        } else {
+            return new ArrayList<IKeyValue>();
+        }
+
+    }
+
+    public IKeyValue getData(String key) {
+        if (data instanceof JSONObject) {
+            return WsViewMapData.from(doget(key, JSONObject.class));
+        } else {
+            return null;
+        }
 
     }
 
@@ -78,9 +98,13 @@ public class WsViewMapData implements IKeyValue {
 
     @Override
     public String get(String key) {
+        return doget(key, String.class);
+    }
+
+    private <T> T doget(String key, Class<T> cls) {
         if (data instanceof HashMap) {
 
-            return ((HashMap<String, String>) data).get(key);
+            return (T) ((HashMap<String, String>) data).get(key);
         } else if (data instanceof JSONObject) {
             Log.e("rlr", key);
 
@@ -91,25 +115,30 @@ public class WsViewMapData implements IKeyValue {
                 for (String str : strs) {
                     i++;
                     if (!tmp.has(str)) {
-                        return "";
+                        return (T) "";
                     }
                     try {
                         if (i == strs.length) {
 
-                            return tmp.getString(str);
+                            if (cls.equals(String.class))
+                                return (T) tmp.getString(str);
+                            else if (cls.equals(JSONObject.class))
+                                return (T) tmp.getJSONObject(str);
+                            else if (cls.equals(JSONArray.class))
+                                return (T) tmp.getJSONArray(str);
                         } else
                             tmp = tmp.getJSONObject(str);
                     } catch (JSONException e) {
 
-                        return "";
+                        return null;
                     }
                 }
-                return tmp.toString();
+                return (T) tmp;
             } else {
-                return "";
+                return (T) "";
             }
 
         }
-        return "";
+        return (T) "";
     }
 }

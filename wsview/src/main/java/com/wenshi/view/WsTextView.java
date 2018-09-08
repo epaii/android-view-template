@@ -7,7 +7,7 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.TextView;
 
-import test.wenshi.com.android_view_template.R;
+
 
 
 public class WsTextView extends TextView implements IWsView {

@@ -1,5 +1,5 @@
 apply plugin: 'com.android.library'
-apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'maven'
 android {
     compileSdkVersion 25
     buildToolsVersion '27.0.3'
@@ -19,3 +19,11 @@ android {
     }
 }
 
+uploadArchives {
+    repositories.mavenDeployer {
+        repository(url: "file:///Users/mrren/Documents/maven")
+        pom.groupId = "com.wenshi.support"
+        pom.artifactId = "view-template"
+        pom.version = "1.0.3"
+    }
+}

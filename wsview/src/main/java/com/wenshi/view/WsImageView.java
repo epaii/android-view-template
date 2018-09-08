@@ -7,7 +7,6 @@ import android.util.AttributeSet;
 import android.util.Log;
 import android.widget.ImageView;
 
-import test.wenshi.com.android_view_template.R;
 
 
 public class WsImageView extends ImageView implements IWsView {

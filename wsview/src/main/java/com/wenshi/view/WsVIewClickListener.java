@@ -37,7 +37,7 @@ public class WsVIewClickListener implements View.OnClickListener {
             if (click_to_change.indexOf("://") == -1) {
                 String[] s = click_to_change.split("\\?");
 
-                click_to_change =  s[0];
+                click_to_change = s[0];
                 if (s.length == 2) {
                     click_to_change = click_to_change + "&" + s[1];
                 }
@@ -71,7 +71,7 @@ public class WsVIewClickListener implements View.OnClickListener {
 
                 }
             }
-            Log.e("click_to_function", "" + click_to_change);
+            Log.e("click_to_function", "" + click_to_function);
         }
     }
 

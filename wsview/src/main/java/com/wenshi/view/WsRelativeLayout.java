@@ -6,7 +6,7 @@ import android.content.res.TypedArray;
 import android.util.AttributeSet;
 import android.widget.RelativeLayout;
 
-import test.wenshi.com.android_view_template.R;
+
 
 
 public class WsRelativeLayout extends RelativeLayout implements IWsView {
